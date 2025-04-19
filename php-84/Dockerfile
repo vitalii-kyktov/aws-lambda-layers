@@ -521,6 +521,10 @@ RUN cp ${CA_BUNDLE} /bref-layer/bref/ssl/cert.pem
 # Copy the OpenSSL config
 RUN cp ${INSTALL_DIR}/bref/ssl/openssl.cnf /bref-layer/bref/ssl/openssl.cnf
 
+# Setup OpenSSL legacy module - include the module for users who need it
+# OpenSSL is already built with 'enable-legacy' flag
+RUN mkdir -p /bref-layer/lib/ossl-modules
+RUN cp /tmp/build/openssl/providers/legacy.so /bref-layer/lib/ossl-modules/legacy.so
 
 # ---------------------------------------------------------------
 # Start from a clean image to copy only the files we need
