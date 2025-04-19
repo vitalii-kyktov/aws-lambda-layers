@@ -3,6 +3,11 @@
 # Fail on error
 set -e
 
+# Set OPENSSL_MODULES if not already set
+if [ -z "${OPENSSL_MODULES}" ]; then
+  export OPENSSL_MODULES="/opt/lib/ossl-modules"
+fi
+
 # check if the RUNTIME_CLASS is already set
 if [ -z "${RUNTIME_CLASS}" ]; then
   export RUNTIME_CLASS="Bref\ConsoleRuntime\Main"
