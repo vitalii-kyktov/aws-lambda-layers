@@ -112,8 +112,8 @@ function testLegacyCipher(string $cipher): bool {
         $keySize = 8; // Default for DES
         $ivSize = 8;  // Default for DES
         
-        $key = substr(md5(rand()), 0, $keySize);
-        $iv = substr(md5(rand()), 0, $ivSize);
+        $key = substr(md5((string) rand()), 0, $keySize);
+        $iv = substr(md5((string) rand()), 0, $ivSize);
         $data = "Test data for $cipher";
         
         // Encrypt with the cipher
