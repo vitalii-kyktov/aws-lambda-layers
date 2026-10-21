@@ -209,6 +209,11 @@ RUN php /bref/lib-copy/copy-dependencies.php /bref-layer/bref/extensions /bref-l
 # Create a symbolic link to the OpenSSL certificates file for BC purposes
 RUN ln -s /etc/ssl/cert.pem /bref-layer/bref/ssl/cert.pem
 
+# Ship the OpenSSL legacy provider (MD5-RSA, DES, RC4...) so apps can enable it with
+# OPENSSL_CONF=<cnf activating the legacy provider> and OPENSSL_MODULES=/opt/lib/ossl-modules
+RUN mkdir -p /bref-layer/lib/ossl-modules \
+&&  cp /usr/lib64/ossl-modules/legacy.so /bref-layer/lib/ossl-modules/legacy.so
+
 # Run `strip` over all libraries and extensions to reduce their size
 RUN find /bref-layer/bref/extensions -type f -exec strip --strip-all {} +
 RUN find /bref-layer/lib -type f -exec strip --strip-all {} +

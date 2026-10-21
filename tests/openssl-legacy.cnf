@@ -1,0 +1,16 @@
+# Enables the OpenSSL legacy provider shipped in the layer at /opt/lib/ossl-modules.
+# Usage: OPENSSL_CONF=/var/task/openssl-legacy.cnf OPENSSL_MODULES=/opt/lib/ossl-modules
+openssl_conf = openssl_init
+
+[openssl_init]
+providers = provider_sect
+
+[provider_sect]
+default = default_sect
+legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1

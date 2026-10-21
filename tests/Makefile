@@ -52,6 +52,12 @@ test-%: vendor
 		|| (docker logs test-${CPU_PREFIX}php-$*-test7 && exit 1) # print logs in case of failure
 	docker stop test-${CPU_PREFIX}php-$*-test7
 
+	# Test the OpenSSL legacy provider: off by default, on with OPENSSL_CONF + OPENSSL_MODULES
+	docker run --platform=${DOCKER_PLATFORM} --rm -v=$(PWD):/var/task:ro --entrypoint=php bref/${CPU_PREFIX}php-$* test_8_openssl_legacy.php
+	docker run --platform=${DOCKER_PLATFORM} --rm -v=$(PWD):/var/task:ro --entrypoint=php \
+		   -e OPENSSL_CONF=/var/task/openssl-legacy.cnf -e OPENSSL_MODULES=/opt/lib/ossl-modules \
+		   bref/${CPU_PREFIX}php-$* test_8_openssl_legacy.php
+
 	echo "\033[1;32m✓ Tests succeeded\033[0m"
 
 vendor:
